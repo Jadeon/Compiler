@@ -1,0 +1,84 @@
+<<id>>, forward
+<<id>>, forward
+$
+<<id>>
+forward
+int, char, bool
+), ;
+int, char, bool
+comma
+), ;
+int, char, bool
+<< var_id>>, if, while, write, read, return, <<id>>
+[
+comma, ), ;
+int, char, bool
+>
+comma
+>
+int
+char
+bool
+<< var_id>>, if, while, write, read, return, <<id>>
+}
+<<var_id>>
+if
+while
+write
+read
+return
+<<id>>
+<<var_id>>
+comma
+:=, )
+var_ref <<var_id>>
+[
+^, %, *, /, +, -, <, >, <=, >=, =, !=, |, &, ), ], ,, ;, :=
+else
+<< var_id>>, if, while, write, read, return, <<id>>, }
+<<char>>,<<var_id>>,<<int>>,<<bool>>,!,(,<<id>>
+<<char>>
+<<var_id>>,<<int>>,<<bool>>,!,(,<<id>>
+comma
+;, )
+<<char>>,<<string>>,<<var_id>>,<<int>>,<<bool>>,!,(,<<id>>
+<<char>>
+<<string>>
+<<var_id>>,<<int>>,<<bool>>,!,(,<<id>>
+comma
+)
+<<var_id>>,<<int>>,<<bool>>,!,(,<<id>>
+|
+&
+), ], comma, ;
+<<var_id>>,<<int>>,<<bool>>,!,(,<<id>>
+<
+>
+<=
+>=
+=
+!=
+|, &, ), ], comma, ;
+<<var_id>>,<<int>>,<<bool>>,!,(,<<id>>
++
+-
+<, >, <=, >=, =, !=, |, &, ), ], comma, ;
+<<var_id>>,<<int>>,<<bool>>,!,(,<<id>>
+*
+/
++, -, <, >, <=, >=, =, !=, |, &, ), ], comma, ;
+<<var_id>>,<<int>>,<<bool>>,!,(,<<id>>
+%
+*, /, +, -, <, >, <=, >=, =, !=, |, &, ), ], comma, ;
+<<var_id>>,<<int>>,<<bool>>,!,(,<<id>>
+^
+%, *, /, +, -, <, >, <=, >=, =, !=, |, &, ), ], comma, ;
+<<var_id>>
+<<int>>
+<<bool>>
+!
+(
+<<id>>
+<<id>>
+<<char>>,<<var_id>>,<<int>>,<<bool>>,!,(,<<id>>
+)

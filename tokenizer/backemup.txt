@@ -1,0 +1,690 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace tokenizer
+{
+    class Program
+    {
+        public static List<List<string>> selectionset = new List<List<string>>();
+        static void Main(string[] args)
+        {     
+            string[] programLines = {};
+            List<Token> tokens = new List<Token>();
+            string file = readFile();
+            try
+            {
+                programLines = File.ReadAllLines(file);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            List<string> keep_delim = new List<string>();
+            List<string> toss_delim = new List<string>();
+            keep_delim = File.ReadAllLines(@"..\..\k_delimiter.txt").ToList();
+            toss_delim = File.ReadAllLines(@"..\..\ta_delimiter.txt").ToList();
+            tokens = tokenize(programLines, keep_delim, toss_delim);
+            Boolean baseResult = Base(tokens);
+            foreach (Token x in tokens) {
+                Console.WriteLine("Token: {0,-10}Type: {1,-10}Row: {2,-10}Index: {3,-10}",x.value,x.type,x.row,x.index);
+            }
+            Console.WriteLine(baseResult);
+            Console.ReadLine();            
+        }
+
+        public static string readFile()
+        {
+            string file = "";
+            string readLine = "";
+
+            Console.WriteLine("Enter the full path to the program you would like to tokenize:");
+            Console.WriteLine("(Press Enter to use default file)");
+
+            readLine = Console.ReadLine();
+            file = String.IsNullOrWhiteSpace(readLine) ? @"..\..\..\prog.txt" : readLine;
+
+            if (!File.Exists(file))
+            {
+                Console.WriteLine("File Not Found: " + file);
+                Console.WriteLine("Press any key...");
+                Console.ReadKey();
+                Console.Clear();
+                file = readFile();  
+                
+            }
+
+            return file;
+        }
+
+        public static List<Token> tokenize(string[] program, List<string> keep_delim, List<string> toss_delim)
+        {
+            List<Token> tokenList = new List<Token>();
+            List<string> master_delim = new List<string>(keep_delim.Union(toss_delim));
+            string stringBuilder = "";            
+            int row = 0;
+            #region Iterate-through-Array
+            foreach (string Line in program)
+            {
+                row++;
+                int index = 0;
+                #region Iterate-through-Line
+                while (index < Line.Length)
+                {
+                    string activeToken = Line[index].ToString();
+                    string nextToken = "";                
+         
+
+                    #region Delimiter-Found
+                    if (master_delim.Contains(activeToken))
+                    {
+                        #region Empty String Builder
+                        if (stringBuilder != "")
+                        {
+                            
+                            tokenList.Add(new Token(stringBuilder, 000, index, row));
+                            stringBuilder = "";
+                        }
+                        #endregion
+
+                        #region Special(")-Delimiter
+                        if (activeToken == "\"")
+                        {                            
+                            int searchResult = Line.IndexOf('"', index + 1);
+                            stringBuilder = Line.Substring(index, searchResult - index) + "\"";
+                            tokenList.Add(new Token(stringBuilder, 000, index, row));
+                            stringBuilder = "";
+                            index = searchResult + 1;
+                        }
+                        #endregion   
+
+                        #region ThrowAway-Delimiter
+                        else if (toss_delim.Contains(activeToken))
+                        {
+                            stringBuilder = "";
+                            index++;
+                        }
+                        #endregion
+
+                        #region Double-Delimiter
+                        else if (index < Line.Length - 1)
+                        {
+                            nextToken = Line[index + 1].ToString();
+                            if (keep_delim.Contains(nextToken) && (nextToken == ">" || nextToken == "=") && activeToken != "<")
+                            {
+                                tokenList.Add(new Token(activeToken + nextToken, 000, index, row));
+                                index += 2;
+                            }
+
+                            #region Standard-Delimiter
+                            else
+                            {
+                                tokenList.Add(new Token(activeToken, 000, index, row));
+                                index++;
+                            }
+                            #endregion
+                        }
+                        #region Standard-Delimiter
+                        else
+                        {
+                            tokenList.Add(new Token(activeToken, 000, index, row));
+                            index++;
+                        }
+                        #endregion
+                        #endregion
+                    }
+                    #endregion
+
+                    #region StringBuilder
+                    else {
+                        stringBuilder += activeToken.ToString();
+                        index++;
+                    }
+                    #endregion
+                }
+                #endregion
+            }
+            return tokenList;
+            #endregion
+        }
+
+
+
+        public static Boolean Base(List<Token> Tokens)
+        {
+            Token current = Tokens[0];
+            if(baseInt(Tokens)) //token is an int
+            {                
+                return true; 
+            }else if (boolKW_Terminal(Tokens))//token is a bool
+            {
+                return true;
+            }else if (logiNeg_Terminal(Tokens))//token is !<base>
+            {
+                if(Base(Tokens))
+                {                    
+                    return true;
+                }
+                return false;
+            }else if (leftParen_Terminal(Tokens))//token is ( < expr > )
+            {
+                if(expression_Parsing(Tokens))
+                {
+                    return true;
+                }
+                
+            }
+            return false;
+        }
+
+        #region Arithmetic Ops
+        public static Boolean mult_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 1)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean add_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 2)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean minus_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 3)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean div_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 4)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean mod_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 5)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean exp_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 6)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
+        #region Relations
+        public static Boolean lessEq_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 7)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean lessStrict_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 8)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean equal_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 9)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean greaterStrict_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 10)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean greaterEq_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 11)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean notEq_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 12)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
+        #region Logical Connectives
+        public static Boolean logiNeg_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 13)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+        public static Boolean logiAnd_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 14)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+        public static Boolean logiOr_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 15)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
+        #region :=/,/;/->
+        public static Boolean assign_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 16)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+        public static Boolean arrow_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 40)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+        public static Boolean comma_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 17)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+        public static Boolean semic_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 18)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
+        #region Parenthesis/Brackets/Braces
+        public static Boolean leftParen_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 19)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean rightParen_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 20)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean leftBracket_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 21)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean rightBracket_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 22)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean leftBrace_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 23)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean rightBrace_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 24)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
+        #region Keywords
+        public static Boolean boolKW_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 25)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean charKW_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 26)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean intKW_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 27)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean forwardKW_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 28)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean whileKW_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 29)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean ifKW_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 30)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean elseKW_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 31)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean returnKW_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 32)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean readKW_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 33)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean writeKW_Terminal(List<Token> Tokens)
+        {
+            if (Tokens[0].type == 34)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
+        #region Base Types
+        public static Boolean baseInt(List<Token> Tokens)
+        {
+            Token current = Tokens[0];
+            if (current.type == 37)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean baseBool(List<Token> Tokens)
+        {
+            Token current = Tokens[0];
+            if (current.type == 35)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean baseChar(List<Token> Tokens)
+        {
+            Token current = Tokens[0];
+            if (current.type == 36)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean baseString(List<Token> Tokens)
+        {
+            Token current = Tokens[0];
+            if (current.type == 38)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean baseID(List<Token> Tokens)
+        {
+            Token current = Tokens[0];
+            if (current.type == 39)
+            {
+                pop(Tokens);
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
+        #region Parsing
+        public static Boolean expression_Parsing(List<Token> Tokens)
+        {
+            if (b_expression_Parsing(Tokens))
+            {
+                if (expression_1_Parsing(Tokens))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static Boolean expression_1_Parsing(List<Token> Tokens)
+        {
+            if (logiOr_Terminal(Tokens))
+            {
+                if (b_expression_Parsing(Tokens))
+                {
+                    if (expression_1_Parsing(Tokens))
+                    {
+                        return true;
+                    }
+                }
+            }
+            else if (logiAnd_Terminal(Tokens))
+            {
+                if (b_expression_Parsing(Tokens))
+                {
+                    if (expression_1_Parsing(Tokens))
+                    {
+                        return true;
+                    }
+                }
+            }
+            else if(inSS(53,Tokens[0]))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static Boolean b_expression_Parsing(List<Token> Tokens)
+        {
+            if (Base(Tokens))
+            {
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
+        #region selectionset Logic
+        public static Boolean inSS(int x, Token t)
+        {   
+            List<List<string>> selectionset = new  List<List<string>>();
+            selectionset = getSS();
+            if (selectionset[x - 1].Contains(t.value))
+            {
+                return true;
+            }           
+            return false;
+        }
+        public static List<List<String>> getSS()
+        {
+            List<List<String>> retval = new List<List<string>>();
+            string[] temp = { };
+            List<string> temp2 = new List<string>();
+            List<String> lines = File.ReadAllLines(@"..\..\..\selectionSetsList.txt").ToList<String>();
+            foreach (string S in lines)
+            {
+                temp = S.Split(',');
+                foreach (string s1 in temp)
+                {
+                    temp2.Add(s1.Replace("comma", ","));
+                }
+                retval.Add(temp2);
+                temp2 = new List<string>();
+            }
+
+            return retval;
+        }
+        #endregion
+
+
+        public static void pop(List<Token> tokenList) 
+        {
+            tokenList.RemoveAt(0);
+        }
+    }
+}
+

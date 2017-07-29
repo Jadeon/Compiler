@@ -1,0 +1,30 @@
+c:\users\josarche\documents\visual studio 2012\Projects\Compilerv1\Compilerv1\bin\Debug\Compilerv1.exe.config
+c:\users\josarche\documents\visual studio 2012\Projects\Compilerv1\Compilerv1\bin\Debug\Compilerv1.exe
+c:\users\josarche\documents\visual studio 2012\Projects\Compilerv1\Compilerv1\bin\Debug\Compilerv1.pdb
+c:\users\josarche\documents\visual studio 2012\Projects\Compilerv1\Compilerv1\obj\Debug\Compilerv1.csprojResolveAssemblyReference.cache
+c:\users\josarche\documents\visual studio 2012\Projects\Compilerv1\Compilerv1\obj\Debug\Compilerv1.exe
+c:\users\josarche\documents\visual studio 2012\Projects\Compilerv1\Compilerv1\obj\Debug\Compilerv1.pdb
+C:\Users\Josh\Documents\Visual Studio 2012\Projects\Compilerv1\Compilerv1\bin\Debug\Compilerv1.exe.config
+C:\Users\Josh\Documents\Visual Studio 2012\Projects\Compilerv1\Compilerv1\obj\Debug\Compilerv1.pdb
+C:\Users\Josh\Documents\Visual Studio 2012\Projects\Compilerv1\Compilerv1\bin\Debug\Compilerv1.exe
+C:\Users\Josh\Documents\Visual Studio 2012\Projects\Compilerv1\Compilerv1\bin\Debug\Compilerv1.pdb
+C:\Users\Josh\Documents\Visual Studio 2012\Projects\Compilerv1\Compilerv1\obj\Debug\Compilerv1.csprojResolveAssemblyReference.cache
+C:\Users\Josh\Documents\Visual Studio 2012\Projects\Compilerv1\Compilerv1\obj\Debug\Compilerv1.exe
+C:\Users\Sapphire\Downloads\Compilerv1\Compilerv1\Compilerv1\bin\Debug\Compilerv1.exe.config
+C:\Users\Sapphire\Downloads\Compilerv1\Compilerv1\Compilerv1\obj\Debug\Compilerv1.pdb
+C:\Users\Sapphire\Downloads\Compilerv1\Compilerv1\Compilerv1\bin\Debug\Compilerv1.exe
+C:\Users\Sapphire\Downloads\Compilerv1\Compilerv1\Compilerv1\bin\Debug\Compilerv1.pdb
+C:\Users\Sapphire\Downloads\Compilerv1\Compilerv1\Compilerv1\obj\Debug\Compilerv1.csprojResolveAssemblyReference.cache
+C:\Users\Sapphire\Downloads\Compilerv1\Compilerv1\Compilerv1\obj\Debug\Compilerv1.exe
+C:\Users\Josh\Downloads\Compilerv1\Compilerv1\Compilerv1\bin\Debug\Compilerv1.exe.config
+C:\Users\Josh\Downloads\Compilerv1\Compilerv1\Compilerv1\obj\Debug\Compilerv1.exe
+C:\Users\Josh\Downloads\Compilerv1\Compilerv1\Compilerv1\obj\Debug\Compilerv1.pdb
+C:\Users\Josh\Downloads\Compilerv1\Compilerv1\Compilerv1\bin\Debug\Compilerv1.exe
+C:\Users\Josh\Downloads\Compilerv1\Compilerv1\Compilerv1\bin\Debug\Compilerv1.pdb
+C:\Users\Josh\Downloads\Compilerv1\Compilerv1\Compilerv1\obj\Debug\Compilerv1.csprojResolveAssemblyReference.cache
+C:\Users\jd.davenport\Dropbox\TTU\Watson\Compilers\Compilerv1\Compilerv1\Compilerv1\bin\Debug\Compilerv1.exe.config
+C:\Users\jd.davenport\Dropbox\TTU\Watson\Compilers\Compilerv1\Compilerv1\Compilerv1\obj\Debug\Compilerv1.exe
+C:\Users\jd.davenport\Dropbox\TTU\Watson\Compilers\Compilerv1\Compilerv1\Compilerv1\obj\Debug\Compilerv1.pdb
+C:\Users\jd.davenport\Dropbox\TTU\Watson\Compilers\Compilerv1\Compilerv1\Compilerv1\bin\Debug\Compilerv1.exe
+C:\Users\jd.davenport\Dropbox\TTU\Watson\Compilers\Compilerv1\Compilerv1\Compilerv1\bin\Debug\Compilerv1.pdb
+C:\Users\jd.davenport\Dropbox\TTU\Watson\Compilers\Compilerv1\Compilerv1\Compilerv1\obj\Debug\Compilerv1.csprojResolveAssemblyReference.cache

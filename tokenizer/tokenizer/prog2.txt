@@ -1,0 +1,21 @@
+﻿foo(int x,int y, bool z) -> < bool >
+{
+int x1, int y2, bool result;
+
+if(x < x1 & y > y1){result = !z;} else{ x:=3; result=z;}
+
+return(result);
+}
+
+
+main() -> <>
+{
+
+if(foo(4+3,1,false))
+{write("DERP");}
+
+else
+{write("de rp");}
+
+
+}

@@ -1,0 +1,15 @@
+C:\Users\jd.davenport\Dropbox\TTU\Watson\Compilers\tokenizer\tokenizer\bin\Debug\tokenizer.exe.config
+C:\Users\jd.davenport\Dropbox\TTU\Watson\Compilers\tokenizer\tokenizer\bin\Debug\tokenizer.exe
+C:\Users\jd.davenport\Dropbox\TTU\Watson\Compilers\tokenizer\tokenizer\bin\Debug\tokenizer.pdb
+C:\Users\jd.davenport\Dropbox\TTU\Watson\Compilers\tokenizer\tokenizer\obj\Debug\tokenizer.csprojResolveAssemblyReference.cache
+C:\Users\jd.davenport\Dropbox\TTU\Watson\Compilers\tokenizer\tokenizer\obj\Debug\tokenizer.exe
+C:\Users\jd.davenport\Dropbox\TTU\Watson\Compilers\tokenizer\tokenizer\obj\Debug\tokenizer.pdb
+C:\Users\JD\Dropbox\TTU\Watson\Compilers\tokenizer\tokenizer\bin\Debug\tokenizer.exe.config
+C:\Users\JD\Dropbox\TTU\Watson\Compilers\tokenizer\tokenizer\obj\Debug\tokenizer.exe
+C:\Users\JD\Dropbox\TTU\Watson\Compilers\tokenizer\tokenizer\obj\Debug\tokenizer.pdb
+D:\Dropbox\TTU\Watson\Compilers\tokenizer\tokenizer\bin\Debug\tokenizer.exe.config
+D:\Dropbox\TTU\Watson\Compilers\tokenizer\tokenizer\obj\Debug\tokenizer.exe
+D:\Dropbox\TTU\Watson\Compilers\tokenizer\tokenizer\obj\Debug\tokenizer.pdb
+D:\Dropbox\TTU\Watson\Compilers\tokenizer\tokenizer\obj\Debug\tokenizer.csprojResolveAssemblyReference.cache
+D:\Dropbox\TTU\Watson\Compilers\tokenizer\tokenizer\bin\Debug\tokenizer.exe
+D:\Dropbox\TTU\Watson\Compilers\tokenizer\tokenizer\bin\Debug\tokenizer.pdb

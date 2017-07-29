@@ -1,0 +1,5 @@
+FILE DELETED
+
+Microsoft Forefront Protection for Exchange Server removed a file since it was found to match a filter.
+File name: "winmail.dat->Compilerv1.zip->Compilerv1.vshost.exe"
+Filter name: "FILE FILTER= Delete Attachment: *.exe"

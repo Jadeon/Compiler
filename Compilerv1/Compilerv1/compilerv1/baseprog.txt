@@ -1,0 +1,13 @@
+﻿
+main() -> <>
+{
+char c;
+
+if(3<1)
+{c := 's';write("DERP");}
+
+else
+{write("de rp");}
+
+
+}
